@@ -50,6 +50,8 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.view addSubview:_tableView];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToInfomation:)];
+    [self.tableViewHeader addGestureRecognizer:tapGesture];
     _tableView.tableHeaderView = self.tableViewHeader;
 }
 
@@ -90,8 +92,7 @@
     self.name.text = _user.screenName;
     self.intro.text = [NSString stringWithFormat:@"简介:%@",_user.description];
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToInfomation:)];
-    [self.tableViewHeader addGestureRecognizer:tapGesture];
+ 
 }
 
 - (void)pushToInfomation:(UITapGestureRecognizer *)tapGesture
