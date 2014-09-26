@@ -16,7 +16,8 @@ typedef void(^SelectNearbyCellBlock)(NSDictionary *result);
 @private
     CLLocationManager *_locationManager;
 }
-@property (copy, nonatomic) SelectNearbyCellBlock selectNearbyCellBlock;
-@property (strong, nonatomic) IBOutlet UITableView *nearbyTable;
+@property (copy, nonatomic) SelectNearbyCellBlock   selectNearbyCellBlock;
+@property (strong, nonatomic) CLLocationManager     *locationManager;
+@property (strong, nonatomic) IBOutlet UITableView  *nearbyTable;
 @property (strong, nonatomic) NSArray *data;
 @end

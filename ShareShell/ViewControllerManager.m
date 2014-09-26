@@ -56,7 +56,7 @@
                                                             description:@"路很长，总会有雨天！"pictureName:@"tutorial_background_01@2x.jpg"];
     
     ICETutorialPage *layer3 = [[ICETutorialPage alloc] initWithSubTitle:@""
-                                                            description:@"但是无论去哪\n天气怎样，都要带上自己的阳光！"
+                                                            description:@"但是无论去哪天气怎样，都要带上自己的阳光！"
                                                             pictureName:@"tutorial_background_02@2x.jpg"];
 //    ICETutorialPage *layer4 = [[ICETutorialPage alloc] initWithSubTitle:@""
 //                                                            description:@""

@@ -118,6 +118,7 @@ NSUInteger   const      kActionSheetPhotoLibraryTag = 1;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [_sendTextView resignFirstResponder];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
 
@@ -184,9 +185,8 @@ NSUInteger   const      kActionSheetPhotoLibraryTag = 1;
 - (void)location
 {
         NearbyViewController *nearCtrl = [[NearbyViewController alloc] init];
-    BaseNavigationController *navigationCtrl = [[BaseNavigationController alloc] initWithRootViewController:nearCtrl];
-    [self presentViewController:navigationCtrl animated:YES completion:^{
-}];
+//    BaseNavigationController *navigationCtrl = [[BaseNavigationController alloc] initWithRootViewController:nearCtrl];
+//    [self presentViewController:navigationCtrl animated:YES completion:nil];
 #pragma mark - 注意block的作用时间和功能
     nearCtrl.selectNearbyCellBlock = ^(NSDictionary *result){
         _longtitude = [result objectForKey:@"lon"];
@@ -197,7 +197,7 @@ NSUInteger   const      kActionSheetPhotoLibraryTag = 1;
         UIButton *itemBtn = (UIButton *)[self.toolBar viewWithTag:100];
         itemBtn.selected = YES;
     };
-    
+    [self.navigationController pushViewController:nearCtrl animated:YES];
 }
 
 
@@ -216,7 +216,7 @@ NSUInteger   const      kActionSheetPhotoLibraryTag = 1;
 #pragma mark - ActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    
+
     UIImagePickerControllerSourceType sourceType;
     if (buttonIndex == kActionSheetCameraTag) {
         //UIImagePickerController的相机类型
@@ -372,7 +372,8 @@ NSUInteger   const      kActionSheetPhotoLibraryTag = 1;
 #pragma mark - dismissSendView
 - (void)dismissSendView:(UIBarButtonItem *)button
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+
+    [self dismissViewControllerAnimated:YES completion:^{
     }];
     
 }

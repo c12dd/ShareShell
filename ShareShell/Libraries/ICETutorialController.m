@@ -198,9 +198,11 @@
 
 // Setup the SubTitle/Description style/text.
 - (void)setOverlayTexts{
-    int index = 0;    
+    NSInteger index = 0;
     for(ICETutorialPage *page in _pages){
         // SubTitles.
+        NSString *string = page.description.text;
+        NSLog(@"%@",page.description.text);
         if ([[[page subTitle] text] length]){
             UILabel *subTitle = [self overlayLabelWithText:[[page subTitle] text]
                                                      layer:[page subTitle]
@@ -230,7 +232,8 @@
                                                                       _windowSize.height - [commonStyle offset],
                                                                       _windowSize.width,
                                                                       TUTORIAL_LABEL_HEIGHT)];
-    [overlayLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+       CGRect frame = overlayLabel.frame;
+//    [overlayLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [overlayLabel setNumberOfLines:[commonStyle linesNumber]];
     [overlayLabel setBackgroundColor:[UIColor clearColor]];
     [overlayLabel setTextAlignment:NSTextAlignmentCenter];  

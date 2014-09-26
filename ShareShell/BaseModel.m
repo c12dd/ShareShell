@@ -45,7 +45,7 @@
 			[invocation setTarget:self];
 			[invocation setSelector:getSel];
 			NSObject *valueObj = nil;
-			[invocation invoke];
+//			[invocation invoke];
 			[invocation getReturnValue:&valueObj];
 //            ITTDINFO(@"attributeName %@ value %@", attributeName, valueObj);
 			if (valueObj) {

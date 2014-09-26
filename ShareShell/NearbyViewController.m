@@ -13,6 +13,9 @@
 
 @end
 
+#define RequestWhenInUseAuthorization(locationManager) [locationManager requestWhenInUseAuthorization]
+
+
 @implementation NearbyViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -24,6 +27,16 @@
     return self;
 }
 
+//- (CLLocationManager *)locationManager
+//{
+//    static CLLocationManager *manager = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        manager = [[CLLocationManager alloc] init];
+//    });
+//    return manager;
+//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,20 +44,44 @@
     UIBarButtonItem *cancelBarItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissNearView:)];
     [cancelBarItem setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem = cancelBarItem;
+    [SVProgressHUD showWithStatus:@"正在寻找。。"];
+
 
     self.nearbyTable.hidden = YES;
     _locationManager = [[CLLocationManager alloc] init];
     //设置定位的精度
-    _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    _locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
     //设置代理
-    _locationManager.delegate = self;
+    self.locationManager.delegate = self;
     //开始定位
-    [_locationManager startUpdatingLocation];
-    [super showSVProcessHUDWithMessage:@"正在寻找。。"];
+    [self.locationManager startUpdatingLocation];
     
+
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+//                [self.locationManager requestWhenInUseAuthorization];
+                RequestWhenInUseAuthorization(self.locationManager);
+            }
+            break;
+        default:
+            break;
+            
+            
+    } 
+}
+ 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+   
+}
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager
 	 didUpdateLocations:(NSArray *)locations {
@@ -73,7 +110,6 @@
     }
     
 }
-
 
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -140,10 +176,11 @@
 
 - (void)dismissNearView:(UIBarButtonItem *)button
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+//    [self dismissViewControllerAnimated:YES completion:^{
+//    [super dismissSVProcessHUD];
+//    }];
     [super dismissSVProcessHUD];
-    }];
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
